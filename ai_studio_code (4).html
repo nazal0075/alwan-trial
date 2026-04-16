@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alwan Restaurant | 3D Experience</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #ff6a00;
+            --gold: #d4af37;
+            --black: #1a1a1a;
+            --white: #ffffff;
+            --bg: #fdfaf5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg); color: var(--black); overflow-x: hidden; }
+
+        /* --- THE BOARD STYLE HEADER --- */
+        header {
+            background: var(--black);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .board-logo {
+            font-family: 'Bebas Neue', cursive;
+            color: var(--white);
+            font-size: 3rem;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px var(--gold);
+        }
+        .board-logo span { color: var(--gold); font-size: 1.5rem; display: block; letter-spacing: 2px; }
+
+        /* --- 3D HERO SECTION --- */
+        .hero {
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2000px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene-3d {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+        }
+
+        /* Large 3D Text behind everything */
+        .bg-text-3d {
+            position: absolute;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 25vw;
+            color: rgba(0,0,0,0.03);
+            z-index: 1;
+            transform: translateZ(-200px);
+            user-select: none;
+        }
+
+        /* THE FLOATING PLATE */
+        .plate-3d {
+            width: 300px;
+            height: 300px;
+            background: url('https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 20px 50px 50px rgba(0,0,0,0.3);
+            border: 10px solid white;
+            transform: rotateX(25deg);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotateX(25deg) translateY(0); }
+            50% { transform: rotateX(15deg) translateY(-25px); }
+        }
+
+        .hero-info {
+            position: absolute;
+            bottom: 10%;
+            text-align: center;
+            z-index: 20;
+        }
+        .hero-info h2 { font-family: 'Bebas Neue'; font-size: 3rem; color: var(--primary); -webkit-text-stroke: 1px white; }
+
+        /* --- MENU SECTION (Official items) --- */
+        .menu { padding: 50px 20px; background: white; }
+        .section-title { font-family: 'Bebas Neue'; font-size: 3rem; text-align: center; margin-bottom: 30px; }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .item-card {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 10px 10px 20px #e0e0e0, -10px -10px 20px #ffffff;
+            border: 1px solid #eee;
+        }
+
+        .item-card i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; display: block; }
+        .item-card h3 { font-size: 1rem; margin-bottom: 5px; }
+        .item-card p { font-weight: 800; color: var(--primary); }
+
+        /* --- MAP --- */
+        .map-section { padding: 20px; }
+        .map-container {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: 300px;
+            border: 4px solid var(--black);
+        }
+
+        /* --- BIG ACTION BUTTONS --- */
+        .footer-actions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            display: flex;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .btn-call { background: #e65100; }
+        .btn-wa { background: #25d366; }
+
+        footer { text-align: center; padding: 100px 0 150px; opacity: 0.5; font-size: 0.8rem; }
+
+        @media (min-width: 768px) {
+            .menu-grid { grid-template-columns: repeat(4, 1fr); }
+            .plate-3d { width: 500px; height: 500px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOARD STYLE HEADER -->
+    <header>
+        <div class="board-logo">
+            ALWAN
+            <span>RESTAURANT</span>
+        </div>
+    </header>
+
+    <!-- 3D HERO -->
+    <div class="hero" id="hero-area">
+        <div class="scene-3d" id="scene">
+            <div class="bg-text-3d">ALWAN</div>
+            
+            <!-- Reliable Unsplash Link -->
+            <div class="plate-3d"></div>
+
+            <!-- Floating Emoji Spices (They never break) -->
+            <div style="position: absolute; top: 20%; right: 20%; font-size: 4rem; filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.2));">🌶️</div>
+            <div style="position: absolute; bottom: 20%; left: 20%; font-size: 4rem; filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.2));">🍃</div>
+        </div>
+
+        <div class="hero-info">
+            <h2>BEST KERALA FOOD</h2>
+            <p>Ajman Industrial 2</p>
+        </div>
+    </div>
+
+    <!-- MENU -->
+    <section class="menu">
+        <h2 class="section-title">TODAY'S SPECIAL</h2>
+        <div class="menu-grid">
+            <div class="item-card">
+                <i class="fa fa-utensils"></i>
+                <h3>Chicken Biryani</h3>
+                <p>AED 15</p>
+            </div>
+            <div class="item-card">
+                <i class="fa fa-fire"></i>
+                <h3>Chicken Grill</h3>
+                <p>AED 28</p>
+            </div>
+            <div class="item-card">
+                <i class="fa fa-drumstick-bite"></i>
+                <h3>Kebab Stick</h3>
+                <p>AED 5</p>
+            </div>
+            <div class="item-card">
+                <i class="fa fa-bowl-food"></i>
+                <h3>Chicken Mughal</h3>
+                <p>AED 18</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAP -->
+    <section class="map-section">
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3604.646549221295!2d55.485!3d25.385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f58356973347d%3A0xc078e4744b415a77!2sAlwan%20Restaurant!5e0!3m2!1sen!2sae!4v1690000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <footer>
+        <p>Alwan Restaurant Ajman | 6AM - 1AM</p>
+        <p>Industrial Area 2, Lucky Roundabout</p>
+    </footer>
+
+    <!-- MOBILE BUTTONS -->
+    <div class="footer-actions">
+        <a href="tel:067434660" class="btn btn-call">
+            <i class="fa fa-phone"></i> CALL
+        </a>
+        <a href="https://wa.me/97167434660" class="btn btn-wa">
+            <i class="fab fa-whatsapp"></i> WHATSAPP
+        </a>
+    </div>
+
+    <script>
+        // Interactive 3D Magnetic Effect
+        const hero = document.getElementById('hero-area');
+        const scene = document.getElementById('scene');
+
+        hero.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 15;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 15;
+            scene.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        // Reset on leave
+        hero.addEventListener('mouseleave', () => {
+            scene.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+        // Touch support for mobile 3D
+        hero.addEventListener('touchmove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.touches[0].pageX) / 15;
+            scene.style.transform = `rotateY(${xAxis}deg)`;
+        });
+    </script>
+
+</body>
+</html>
